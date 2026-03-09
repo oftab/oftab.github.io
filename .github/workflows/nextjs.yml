@@ -50,6 +50,16 @@ jobs:
           node-version: "20"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
 
+      - name: Install pnpm
+        if: steps.detect-package-manager.outputs.manager == 'pnpm'
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Add pnpm to PATH
+        if: steps.detect-package-manager.outputs.manager == 'pnpm'
+        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
