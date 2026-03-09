@@ -39,7 +39,7 @@ export function Footer() {
           <div className="col-span-2">
             <a href="#" className="inline-flex items-center gap-3 mb-5 group">
               <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-foreground shadow-lg shadow-foreground/10 transition-transform duration-300 group-hover:scale-105">
-                <span className="text-sm font-bold text-background">of</span>
+                <span className="text-sm font-bold text-background">ot</span>
               </div>
               <span className="text-[17px] font-semibold">oftab</span>
             </a>
