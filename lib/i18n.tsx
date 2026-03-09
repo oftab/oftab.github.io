@@ -1,0 +1,178 @@
+"use client"
+
+import { createContext, useContext, useState, useCallback, type ReactNode } from "react"
+
+export type Language = "zh" | "en"
+
+interface Translations {
+  [key: string]: {
+    zh: string
+    en: string
+  }
+}
+
+export const translations: Translations = {
+  // Navigation
+  "nav.features": { zh: "功能特性", en: "Features" },
+  "nav.showcase": { zh: "产品展示", en: "Showcase" },
+  "nav.pricing": { zh: "定价方案", en: "Pricing" },
+  "nav.docs": { zh: "文档", en: "Docs" },
+  "nav.download": { zh: "下载", en: "Download" },
+  
+  // Hero Section
+  "hero.badge": { zh: "AI 驱动的效率革命", en: "AI-Powered Productivity Revolution" },
+  "hero.title.line1": { zh: "一键启动", en: "Launch Anything" },
+  "hero.title.line2": { zh: "万物触达", en: "In a Flash" },
+  "hero.description": { 
+    zh: "融合 AI 智能的桌面快捷启动工具，让你以思维的速度操控电脑。快速搜索、智能对话、一键执行，重新定义你的工作效率。", 
+    en: "Desktop launcher with AI intelligence. Control your computer at the speed of thought. Quick search, smart chat, instant actions - redefine your productivity." 
+  },
+  "hero.cta.download": { zh: "免费下载", en: "Download Free" },
+  "hero.cta.demo": { zh: "观看演示", en: "Watch Demo" },
+  "hero.shortcut": { zh: "按下", en: "Press" },
+  "hero.shortcut.action": { zh: "即刻体验", en: "to Launch" },
+  
+  // Stats
+  "stats.users": { zh: "活跃用户", en: "Active Users" },
+  "stats.commands": { zh: "日均指令", en: "Daily Commands" },
+  "stats.plugins": { zh: "插件生态", en: "Plugins" },
+  "stats.rating": { zh: "用户评分", en: "User Rating" },
+  
+  // Features Section
+  "features.tag": { zh: "核心功能", en: "Core Features" },
+  "features.title": { zh: "为效率而生的强大功能", en: "Powerful Features for Maximum Efficiency" },
+  "features.subtitle": { zh: "每一个功能都经过精心设计，让你的工作流程更加流畅", en: "Every feature is carefully crafted to streamline your workflow" },
+  
+  "features.search.title": { zh: "极速搜索", en: "Lightning Search" },
+  "features.search.desc": { zh: "毫秒级响应，本地文件、应用、网页书签全局搜索", en: "Millisecond response, search files, apps, and bookmarks globally" },
+  
+  "features.ai.title": { zh: "AI 智能助手", en: "AI Assistant" },
+  "features.ai.desc": { zh: "内置大语言模型，自然语言对话，智能理解你的意图", en: "Built-in LLM, natural language chat, understands your intent" },
+  
+  "features.workflow.title": { zh: "工作流自动化", en: "Workflow Automation" },
+  "features.workflow.desc": { zh: "创建自定义工作流，一键执行复杂任务序列", en: "Create custom workflows, execute complex task sequences with one click" },
+  
+  "features.plugins.title": { zh: "插件生态", en: "Plugin Ecosystem" },
+  "features.plugins.desc": { zh: "丰富的插件市场，扩展无限可能，支持自定义开发", en: "Rich plugin marketplace, unlimited possibilities, custom development supported" },
+  
+  "features.clipboard.title": { zh: "剪贴板管理", en: "Clipboard Manager" },
+  "features.clipboard.desc": { zh: "智能记录剪贴历史，支持图片、代码、富文本", en: "Smart clipboard history, supports images, code, and rich text" },
+  
+  "features.translate.title": { zh: "即时翻译", en: "Instant Translation" },
+  "features.translate.desc": { zh: "选中即译，支持 100+ 语言，OCR 图片识别翻译", en: "Select to translate, 100+ languages, OCR image recognition" },
+  
+  // Showcase Section
+  "showcase.tag": { zh: "产品展示", en: "Showcase" },
+  "showcase.title": { zh: "简约而不简单", en: "Simple Yet Powerful" },
+  "showcase.subtitle": { zh: "精心打磨的界面设计，为你带来极致的使用体验", en: "Carefully crafted interface design for the ultimate user experience" },
+  
+  // Pricing Section
+  "pricing.tag": { zh: "定价方案", en: "Pricing" },
+  "pricing.title": { zh: "选择适合你的方案", en: "Choose Your Plan" },
+  "pricing.subtitle": { zh: "无论个人还是团队，总有一款适合你", en: "Whether individual or team, there is a plan for you" },
+  
+  "pricing.free.name": { zh: "免费版", en: "Free" },
+  "pricing.free.price": { zh: "¥0", en: "$0" },
+  "pricing.free.period": { zh: "/永久", en: "/forever" },
+  "pricing.free.desc": { zh: "适合个人日常使用", en: "Perfect for daily personal use" },
+  "pricing.free.feature1": { zh: "基础搜索功能", en: "Basic search features" },
+  "pricing.free.feature2": { zh: "剪贴板管理", en: "Clipboard management" },
+  "pricing.free.feature3": { zh: "系统插件", en: "System plugins" },
+  "pricing.free.feature4": { zh: "社区支持", en: "Community support" },
+  
+  "pricing.pro.name": { zh: "专业版", en: "Pro" },
+  "pricing.pro.price": { zh: "¥99", en: "$15" },
+  "pricing.pro.period": { zh: "/年", en: "/year" },
+  "pricing.pro.desc": { zh: "解锁全部 AI 能力", en: "Unlock all AI capabilities" },
+  "pricing.pro.feature1": { zh: "所有免费版功能", en: "All Free features" },
+  "pricing.pro.feature2": { zh: "AI 智能助手", en: "AI assistant" },
+  "pricing.pro.feature3": { zh: "高级插件市场", en: "Premium plugins" },
+  "pricing.pro.feature4": { zh: "工作流自动化", en: "Workflow automation" },
+  "pricing.pro.feature5": { zh: "优先技术支持", en: "Priority support" },
+  "pricing.pro.badge": { zh: "最受欢迎", en: "Most Popular" },
+  
+  "pricing.team.name": { zh: "团队版", en: "Team" },
+  "pricing.team.price": { zh: "¥299", en: "$45" },
+  "pricing.team.period": { zh: "/用户/年", en: "/user/year" },
+  "pricing.team.desc": { zh: "为团队协作而生", en: "Built for team collaboration" },
+  "pricing.team.feature1": { zh: "所有专业版功能", en: "All Pro features" },
+  "pricing.team.feature2": { zh: "团队共享配置", en: "Team shared config" },
+  "pricing.team.feature3": { zh: "管理员控制台", en: "Admin console" },
+  "pricing.team.feature4": { zh: "SSO 单点登录", en: "SSO authentication" },
+  "pricing.team.feature5": { zh: "专属客户经理", en: "Dedicated account manager" },
+  
+  "pricing.cta.free": { zh: "免费开始", en: "Get Started" },
+  "pricing.cta.pro": { zh: "升级专业版", en: "Upgrade to Pro" },
+  "pricing.cta.team": { zh: "联系销售", en: "Contact Sales" },
+  
+  // Download Section
+  "download.tag": { zh: "立即下载", en: "Download Now" },
+  "download.title": { zh: "开始你的效率之旅", en: "Start Your Productivity Journey" },
+  "download.subtitle": { zh: "支持 macOS、Windows、Linux 全平台", en: "Available for macOS, Windows, and Linux" },
+  "download.version": { zh: "最新版本", en: "Latest Version" },
+  "download.size": { zh: "文件大小", en: "File Size" },
+  "download.macos": { zh: "下载 macOS 版", en: "Download for macOS" },
+  "download.windows": { zh: "下载 Windows 版", en: "Download for Windows" },
+  "download.linux": { zh: "下载 Linux 版", en: "Download for Linux" },
+  
+  // Footer
+  "footer.product": { zh: "产品", en: "Product" },
+  "footer.resources": { zh: "资源", en: "Resources" },
+  "footer.company": { zh: "公司", en: "Company" },
+  "footer.legal": { zh: "法律", en: "Legal" },
+  "footer.changelog": { zh: "更新日志", en: "Changelog" },
+  "footer.blog": { zh: "博客", en: "Blog" },
+  "footer.community": { zh: "社区", en: "Community" },
+  "footer.about": { zh: "关于我们", en: "About" },
+  "footer.careers": { zh: "加入我们", en: "Careers" },
+  "footer.contact": { zh: "联系我们", en: "Contact" },
+  "footer.privacy": { zh: "隐私政策", en: "Privacy" },
+  "footer.terms": { zh: "服务条款", en: "Terms" },
+  "footer.copyright": { zh: "保留所有权利", en: "All rights reserved" },
+  "footer.slogan": { zh: "让效率触手可及", en: "Productivity at your fingertips" },
+  
+  // Changelog
+  "changelog.title": { zh: "更新日志", en: "Changelog" },
+  "changelog.subtitle": { zh: "了解 oftab 的最新变化和改进", en: "Learn about the latest changes and improvements to oftab" },
+  "changelog.version.latest": { zh: "最新版本", en: "Latest Version" },
+  "changelog.date": { zh: "发布日期", en: "Release Date" },
+  "changelog.new": { zh: "新增", en: "New" },
+  "changelog.improved": { zh: "改进", en: "Improved" },
+  "changelog.fixed": { zh: "修复", en: "Fixed" },
+  
+  // Common
+  "common.learnMore": { zh: "了解更多", en: "Learn More" },
+  "common.getStarted": { zh: "开始使用", en: "Get Started" },
+}
+
+interface LanguageContextType {
+  language: Language
+  setLanguage: (lang: Language) => void
+  t: (key: string) => string
+}
+
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
+
+export function LanguageProvider({ children }: { children: ReactNode }) {
+  const [language, setLanguage] = useState<Language>("zh")
+
+  const t = useCallback((key: string): string => {
+    const translation = translations[key]
+    if (!translation) return key
+    return translation[language]
+  }, [language])
+
+  return (
+    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+      {children}
+    </LanguageContext.Provider>
+  )
+}
+
+export function useLanguage() {
+  const context = useContext(LanguageContext)
+  if (!context) {
+    throw new Error("useLanguage must be used within a LanguageProvider")
+  }
+  return context
+}
