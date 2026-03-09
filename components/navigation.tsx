@@ -44,7 +44,7 @@ export function Navigation() {
         )}>
           <a href="#" className="flex items-center gap-3 group">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-foreground shadow-sm transition-all duration-300 group-hover:rotate-6 group-hover:scale-110 group-hover:shadow-lg">
-              <span className="text-xs font-bold text-background group-hover:-rotate-6 transition-transform duration-300">of</span>
+              <span className="text-xs font-bold text-background group-hover:-rotate-6 transition-transform duration-300">ot</span>
             </div>
             <span className="text-[16px] font-semibold tracking-tight">oftab</span>
           </a>
